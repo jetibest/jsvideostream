@@ -18,7 +18,7 @@ This is just an example of how it could be done, but you could easily customize 
     # backend
     server/run.sh
     
-    # frontend (only tested on firefox, but any modern browsr should work)
+    # frontend (only tested on firefox, but any modern browser should work)
     firefox client/index.html 2>/dev/null
     
 ## Libraries
