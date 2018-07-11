@@ -13,6 +13,11 @@ This is just an example of how it could be done, but you could easily customize 
  - You could use [Prism](https://github.com/guodong/prism) instead of Broadway, e.g. using `var pr = prism.create(); pr.decodeNal(uint8arr.buffer); /* use pr.SL, pr.SCb, pr.SCr */`.
  - You could feed an MP4 file directly to NetCat instead of using FFMpeg, e.g. replacing the `ffmpeg` command with `cat file.mp4`.
 
+## Install
+
+    git clone https://github.com/jetibest/jsvideostream.git
+    cd jsvideostream
+
 ## Usage
 
     # backend
