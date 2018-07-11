@@ -2,24 +2,24 @@
 {
     if(typeof define === 'function' && define.amd)
     {
-        define([], factory);
+        define(['eventlistener'], factory);
     }
     else if(typeof exports === 'object')
     {
-        module.exports = factory();
+        module.exports = factory(require('eventlistener'));
     }
     else
     {
-        root.bufferedreader = factory();
+        root.bufferedreader = factory(root.eventlistener);
     }
-}(this, function()
+}(this, function(eventlistener)
 {
     var self = {};
     self.create = function(args)
     {
         args = args || {};
         
-        var br = window.eventlistener.create({
+        var br = eventlistener.create({
             type: 'type' in args ? args.type : 'String',
             delimiter: 'delimiter' in args ? args.delimiter : '\n',
             linequeue: []
