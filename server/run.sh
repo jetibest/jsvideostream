@@ -13,11 +13,11 @@ framerate="15"
 profile="baseline" # baseline, main, high
 config="-pix_fmt yuv420p -tune zerolatency"
 flags=""
-output="mpegts"
+output="h264" # mpegts, h264
 
 ## For chunked MP4:
-#    flags="-movflags frag_keyframe+empty_moov -g 52"
-#    output="mp4"
+#flags="-movflags frag_keyframe+empty_moov -g 52"
+#output="mp4"
 
 # NetCat settings
 host="127.0.0.1"
