@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>H264 MPEG-TS Client</title>
+</head>
+<body>
+	<div id="VideoStreamContainer"></div>
+    
+    <script src="eventlistener.js"></script>
+    <script src="bufferedreader.js"></script>
+    <script src="lib/broadway/Decoder.js"></script>
+    <script src="lib/broadway/YUVCanvas.js"></script>
+    <script src="lib/broadway/Player.js"></script>
+    <script src="jsmpeg.mod.min.js"></script>
+    
+    <script>
+    (function()
+    {
+        var id = function(id){return document.getElementById(id);};
+        
+        var p = new Player({
+            useWorker: false,
+            webgl: true
+        });
+        id('VideoStreamContainer').appendChild(p.canvas);
+        
+        var br = bufferedreader.create({
+            delimiter: '\x00\x00\x00',
+            type: 'Uint8Array'
+        });
+        br.on('line', function(arr)
+        {
+            p.decode(arr);
+        });
+        
+        var ws = new WebSocket('ws://127.0.0.1:8084');
+        ws.binaryType = 'arraybuffer';
+        ws.onmessage = function(evt)
+        {
+            br.writebytes(new Uint8Array(evt.data));
+        };
+        
+    })();
+    </script>
+</body>
+</html>
