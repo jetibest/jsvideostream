@@ -9,8 +9,11 @@ var config = {
 };
 
 var wss = new WebSocket.Server({port: config.port, host: config.host});
+console.log('Listening at ' + config.host + ':' + config.port + ' for websocket clients.');
 wss.on('connection', function(ws)
 {
+    console.log('Websocket opened. Opening connection.');
+    
     var conn = net.createConnection(config.forwardport, config.forwardhost);
     conn.on('data', function(buf)
     {
