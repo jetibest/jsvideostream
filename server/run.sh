@@ -9,7 +9,8 @@ trap "kill $nodepid 2>/dev/null" EXIT
 # FFMpeg h264 settings
 codec="h264_nvenc" # h264_nvenc, libx264, h264_omx
 bitrate="500k"
-profile="baseline"
+framerate="15"
+profile="baseline" # baseline, main, high
 config="-pix_fmt yuv420p -tune zerolatency"
 flags=""
 output="mpegts"
@@ -22,4 +23,4 @@ output="mpegts"
 host="127.0.0.1"
 port="8083"
 
-ffmpeg -i /dev/video0 -r 15 -c:v $codec -b:v $bitrate -profile:v $profile $config $flags -f $output - | nc -l -p $port $host
+ffmpeg -i /dev/video0 -c:v $codec -r $framerate -b:v $bitrate -profile:v $profile $config $flags -f $output - | nc -l -p $port $host
