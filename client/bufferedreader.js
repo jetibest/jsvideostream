@@ -24,7 +24,7 @@
             delimiter: 'delimiter' in args ? args.delimiter : '\n',
             linequeue: []
         });
-        var txtEnc = typeof TextEncoder === 'function' ? new TextEncoder() : {encode: function(str){return Uint8Array.from(str, function(c){return c.codePointAt(0);});}};
+        var txtEnc = {encode: function(str){return Uint8Array.from(str, function(c){return c.codePointAt(0);});}};
         var typeconvert = function(ln){return ln};
         br.settype = function(type)
         {

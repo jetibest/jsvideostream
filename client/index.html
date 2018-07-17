@@ -14,7 +14,6 @@
     <script src="lib/broadway/YUVCanvas.js"></script>
     <script src="lib/broadway/Player.js"></script>
     <!--<script src="jsmpeg.mod.min.js"></script>-->
-    <!--<script src="lib/prism/prism.js"></script>-->
     
     <script>
     (function()
@@ -26,40 +25,40 @@
             webgl: true
         });
         id('VideoStreamContainer').appendChild(p.canvas);
-        //var p = prism.create();
         
         var ws = null;
         var start = function()
         {
             stop();
             
-            var txtEnc = typeof TextEncoder === 'function' ? new TextEncoder() : {encode: function(str){return Uint8Array.from(str, function(c){return c.codePointAt(0);});}};
+            var txtEnc = {encode: function(str){return Uint8Array.from(str, function(c){return c.codePointAt(0);});}};
             var br = bufferedreader.create({
-                delimiter: '\x00\x00\x00'
+                delimiter: '\x00\x00\x00\x01'
             });
             br.on('line', function(str)
             {
+				if(!str)
+				{
+					return; // empty data
+				}
+				
                 var arr = txtEnc.encode(br.delimiter + str);
                 var nalUnitType = arr[4] & parseInt('00011111', 2);
-                console.log('NAL unit found: ' + nalUnitType + ' (' + (arr.length) + ' bytes)');
+                //console.log('NAL unit found: ' + nalUnitType + ' (' + (arr.length) + ' bytes)');
+                //console.log('array: ' + arr);
                 if(nalUnitType === 1 || nalUnitType === 5 || nalUnitType === 7 || nalUnitType === 8)
                 {
-                    console.log('Decoding NAL unit:');
-                    console.log(arr);
-                    // prism:
-                    //p.decodeNal(arr.buffer);
-                    //console.log('packet result: ' + p.SL + ', ' + p.SCb + ', ' + p.SCr);
-                    // broadway:
                     p.decode(arr);
                     return;
                 }
-                console.log('NAL unit discarded: Unsupported unit type.');
+                //console.log('NAL unit discarded: Unsupported unit type.');
             });
             
             ws = new WebSocket('ws://127.0.0.1:8084');
             ws.binaryType = 'arraybuffer';
             ws.onmessage = function(evt)
             {
+				// console.log('Received data: ' + new Uint8Array(evt.data));
                 br.writebytes(new Uint8Array(evt.data));
             };
             ws.onclose = function()
