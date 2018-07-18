@@ -13,7 +13,7 @@ framerate="15"
 profile="baseline" # baseline, main, high
 config="-pix_fmt yuv420p -tune zerolatency"
 flags=""
-output="rawvideo" # mpegts, h264
+output="h264" # mpegts, h264
 
 ## For chunked MP4:
 #flags="-movflags frag_keyframe+empty_moov -g 52"
