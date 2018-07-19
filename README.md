@@ -1,4 +1,4 @@
-# jsvideostream (under construction)
+# jsvideostream
 
 Live videostream in any browser using a Javascript client from an FFMpeg command (`ffmpeg`).
 The advantage of using websockets like this, and decoding H264/MPEG-TS in Javascript, is raw access to the videostream at the client-side, and minimizing lag/latency as there is barely any protocol overhead and the chunks never contain more than one frame at a time.
@@ -28,6 +28,6 @@ This is just an example of how it could be done, but you could easily customize 
     
 ## Libraries
 
-This project uses [Broadway](https://github.com/mbebenita/Broadway) and a slightly modified version of [JSMpeg](https://github.com/phoboslab/jsmpeg).
+This project uses [Broadway](https://github.com/mbebenita/Broadway) for displaying H264 frames and [JSMpeg](https://github.com/phoboslab/jsmpeg) for MPEG-TS demuxing.
 
 The back-end currently depends on NodeJS, NetCat, NodeJS, FFMpeg (with H264), and Firefox. But these components may easily be modified to use alternatives.
